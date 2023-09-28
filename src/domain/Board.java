@@ -11,10 +11,10 @@ public class Board {
     private int countColums;
     private int difficulty;
     private List<Coordinate> boardSolution;
-    
+
     public Board(){
+        
     }
-    
     public Board (int colums, int rows, int diff){
         this.countColums = colums;
         this.countRows= rows;
@@ -85,7 +85,6 @@ public class Board {
     public void setBoardSolution(List<Coordinate> boardSolution) {
         this.boardSolution = boardSolution;
     }
-    
     public void doGeneric (Element oneElement){
         char direction = oneElement.getSymbol();
         switch (direction) {
@@ -98,6 +97,20 @@ public class Board {
             case '\\' : doAntiDiagonal(oneElement);
             break;
         }
+    }
+    public void doGeneric (Match match,Element oneElement){
+        char direction = oneElement.getSymbol();
+        switch (direction) {
+            case '-' : doHorizontal(oneElement);
+            break;
+            case '/' : doDiagonal(oneElement);
+            break;
+            case '|' : doVertical(oneElement);
+            break;
+            case '\\' : doAntiDiagonal(oneElement);
+            break;
+        }
+        match.addMovements(oneElement.getCoordinate());
     }
     public void doDiagonal(Element oneElement) {
     int row = oneElement.getCoordinate().getX();
@@ -180,16 +193,27 @@ public class Board {
     }
     
     public void createSolution(Board oneBoard) {
-        int numRows = oneBoard.getCountRows();
-        int numCols = oneBoard.getCountColums();
-        List<Coordinate> solutionCoordinates = new ArrayList<>();
-        for (int i = 0; i < oneBoard.getDifficulty(); i++) {
-            int randomX = (int) (Math.random() * numRows);
-            int randomY = (int) (Math.random() * numCols);
-            Coordinate coordinate = new Coordinate(randomX,randomY);
+    int numRows = oneBoard.getCountRows();
+    int numCols = oneBoard.getCountColums();
+    List<Coordinate> solutionCoordinates = new ArrayList<>();
+    int difficulty = oneBoard.getDifficulty();
+    
+    while (solutionCoordinates.size() < difficulty) {
+        int randomX = (int) (Math.random() * numRows);
+        int randomY = (int) (Math.random() * numCols);
+        Coordinate coordinate = new Coordinate(randomX, randomY);
+        boolean coordinateExists = false;
+        for (Coordinate existingCoordinate : solutionCoordinates) {
+            if (existingCoordinate.equals(coordinate)) {
+                coordinateExists = true;
+                break;
+            }
+        }
+        if (!coordinateExists) {
             solutionCoordinates.add(coordinate);
         }
-        oneBoard.setBoardSolution(solutionCoordinates);      
+    } 
+    oneBoard.setBoardSolution(solutionCoordinates);
     }
     public void executeSolution (Board board){
         List<Coordinate> aux = board.getBoardSolution();

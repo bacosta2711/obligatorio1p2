@@ -62,6 +62,6 @@ public class Match {
         
     }*/
     public void addMovements (Coordinate newCoordinate){
-        
+        this.movements.add(newCoordinate);
     }
 }

@@ -8,7 +8,16 @@ public class Coordinate {
     
     @Override
     public String toString() {
-        return "(" + this.getX() + ","+this.getY() +")";
+        return "(" + (this.getX()+1) + ","+(this.getY()+1) +")";
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coordinate coordinate = (Coordinate) o;
+
+        return this.getX() == coordinate.getX() && this.getY() == coordinate.getY();
     }
     
     
