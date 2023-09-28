@@ -98,13 +98,24 @@ public class Interface {
                     exit();
                 }else{
                     if(y.equalsIgnoreCase("H")){
-                         System.out.println("Los movimientos que se han realizado son:");
-                        showHistory();
+                        do{ System.out.println("Los movimientos que se han realizado son:");
+                        showHistory(match);
+                        System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
+                        System.out.println("");
+                        y = in.next();
+                        } while(y.equalsIgnoreCase("H"));
+
+
                     }else{
                         if(y.equalsIgnoreCase("S")){
+                            do{
                             System.out.println("Los movimientos que daran solucion al tablero son:");
-                             showHistory();
-                            showSolution();
+                            showHistory(match);
+                            showSolution(match);
+                            System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
+                            System.out.println("");
+                            y = in.next();
+                            } while(y.equalsIgnoreCase("S"));
                         }else{
                             cord.setY(Integer.parseInt(y)-1);
                         }
@@ -120,13 +131,24 @@ public class Interface {
                     exit();
                 }else{
                     if(x.equalsIgnoreCase("H")){
-                         System.out.println("Los movimientos que se han realizado son:");
-                        showHistory();
+                        do{ 
+                        System.out.println("Los movimientos que se han realizado son:");
+                        showHistory(match);
+                        System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
+                        System.out.println("");
+                        x = in.next();
+                       }while(x.equalsIgnoreCase("H"));
+
                     }else{
                         if(x.equalsIgnoreCase("S")){
+                            do{
                             System.out.println("Los movimientos que daran solucion al tablero son:");
-                             showHistory();
-                            showSolution();
+                            showHistory(match);
+                            showSolution(match);
+                            System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
+                            System.out.println("");
+                            x = in.next();
+                            }while(x.equalsIgnoreCase("S"));
                         }else{
                             cord.setX(Integer.parseInt(x)-1);
                         }
@@ -178,8 +200,8 @@ public class Interface {
             Board boardNew= new Board();
             boardNew.clone(board);
             
-            boardNew.doGeneric(boardNew.getElementByCoord(boardNew, cords));
-
+            boardNew.doGeneric(match,boardNew.getElementByCoord(boardNew, cords));
+            boardNew.setBoardSolution(board.getBoardSolution());
             for (int p=0;p<2;p++){
                 System.out.print("    1");
                 for (int y=1;y<yBoard; y++) {
@@ -399,7 +421,7 @@ public class Interface {
          
          Board b = new Board(rows,column,dificulty);
          b =b.newRandomBoard(b);
-         b.createSolution(b);
+          b.createSolution(b);
          b.executeSolution(b);
          match.setBoard(b);
          
@@ -413,7 +435,7 @@ public class Interface {
          System.exit(0);
      }
      
-     public static void showSolution(){
+     public static void showSolution(Match match){
         List<Coordinate> solutions = match.getBoard().getBoardSolution();
         
        
@@ -423,7 +445,7 @@ public class Interface {
         }
      }
      
-     public static void showHistory(){
+     public static void showHistory(Match match){
         List<Coordinate> movements = match.getMovements();
         
         for (int i = movements.size() - 1; i >= 0; i--) {

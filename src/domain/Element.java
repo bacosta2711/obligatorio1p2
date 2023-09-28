@@ -22,11 +22,6 @@ public class Element {
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
-
-   
-
-    
-    
     public char getSymbol() {
         return symbol;
     }
