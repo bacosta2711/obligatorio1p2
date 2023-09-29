@@ -45,7 +45,7 @@ public class Interface {
          System.out.println("           ----------------------   ");
          System.out.println("                VAMOS A JUGAR!      ");
          System.out.println("           ----------------------   ");
-         boolean opcionValida = false;
+         boolean validOption = false;
          do{
          System.out.println("- Como desea implementar el tablero?   ");
          System.out.println(" ");
@@ -58,34 +58,35 @@ public class Interface {
          String op= in.next();
          switch(op){
              case "a": boardFormFile("./test/datos.txt");
-             opcionValida = true;
+             validOption = true;
                 break;
              case "A" : boardFormFile("./test/datos.txt");
-             opcionValida = true;
+             validOption = true;
                  break;
              case "b": boardFormFile("./test/default.txt");
-             opcionValida = true;
+             validOption = true;
                 break;
              case "B" : boardFormFile("./test/default.txt");
-             opcionValida = true;
+             validOption = true;
                  break;
              case "c": boardFormRandom();
-             opcionValida = true;
+             validOption = true;
                 break;
              case "C" : boardFormRandom();
-             opcionValida = true;
+             validOption = true;
                  break;
              case "x": exit();
-             opcionValida = true;
+             validOption = true;
                 break;
              case "X" : exit();
-             opcionValida = true;
+             validOption = true;
                 break;     
              default:
                  
-                 System.out.println("Por favor, ingrese una opcion valida.");
+                 System.out.println("Dato incorrecto.Por favor, ingrese una opcion valida.");
+                 System.out.println(" ");
          }
-         }while(!opcionValida);
+         }while(!validOption);
          
         play();
      }
@@ -95,11 +96,12 @@ public class Interface {
          
          Coordinate coords = new Coordinate(0,0);
          printBoard(match.getBoard(), false, coords);
-         
+         boolean validOptionY = false;
+         boolean validOptionX = false;
          do{
          
             Coordinate cord = new Coordinate(0,0);
-
+            
             do {
                 System.out.printf("\n");
                 System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
@@ -111,9 +113,11 @@ public class Interface {
                     if(y.equalsIgnoreCase("H")){
                         do{ System.out.println("Los movimientos que se han realizado son:");
                         showHistory(match);
+                        System.out.println("");
                         System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                         System.out.println("");
                         y = in.next();
+                        validOptionY = true;
                         } while(y.equalsIgnoreCase("H"));
 
 
@@ -123,17 +127,19 @@ public class Interface {
                             System.out.println("Los movimientos que daran solucion al tablero son:");
                             showHistory(match);
                             showSolution(match);
-                            System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                             System.out.println("");
+                            System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                             y = in.next();
+                            System.out.println("");
+                            validOptionY = true;
                             } while(y.equalsIgnoreCase("S"));
                         }else{
                             cord.setY(Integer.parseInt(y)-1);
                         }
                     }
                 }
-            }while(!match.getBoard().isMovementvalid(match.getBoard(),cord));
-
+            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord)) && !validOptionY);
+                
             do {
                 System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
                 System.out.printf("\n");
@@ -146,8 +152,9 @@ public class Interface {
                         System.out.println("Los movimientos que se han realizado son:");
                         showHistory(match);
                         System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
-                        System.out.println("");
                         x = in.next();
+                        System.out.println("");
+                        validOptionX = true;
                        }while(x.equalsIgnoreCase("H"));
 
                     }else{
@@ -157,15 +164,16 @@ public class Interface {
                             showHistory(match);
                             showSolution(match);
                             System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
-                            System.out.println("");
                             x = in.next();
+                            System.out.println("");
+                            validOptionX = true;
                             }while(x.equalsIgnoreCase("S"));
                         }else{
                             cord.setX(Integer.parseInt(x)-1);
                         }
                     }
                 }
-            }while(!match.getBoard().isMovementvalid(match.getBoard(),cord));
+            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord) && !validOptionX));
             
             if(cord.getX()==-2&&cord.getY()==-2){
                 //TODO IMPLEMENTAR IR PARA ATRAS
