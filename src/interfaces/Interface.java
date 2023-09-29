@@ -45,7 +45,8 @@ public class Interface {
          System.out.println("           ----------------------   ");
          System.out.println("                VAMOS A JUGAR!      ");
          System.out.println("           ----------------------   ");
-         
+         boolean opcionValida = false;
+         do{
          System.out.println("- Como desea implementar el tablero?   ");
          System.out.println(" ");
          System.out.println("a- Tomar datos de del archivo 'datos.txt'");
@@ -57,26 +58,36 @@ public class Interface {
          String op= in.next();
          switch(op){
              case "a": boardFormFile("./test/datos.txt");
+             opcionValida = true;
                 break;
              case "A" : boardFormFile("./test/datos.txt");
+             opcionValida = true;
                  break;
              case "b": boardFormFile("./test/default.txt");
+             opcionValida = true;
                 break;
              case "B" : boardFormFile("./test/default.txt");
+             opcionValida = true;
                  break;
              case "c": boardFormRandom();
+             opcionValida = true;
                 break;
              case "C" : boardFormRandom();
+             opcionValida = true;
                  break;
              case "x": exit();
+             opcionValida = true;
                 break;
              case "X" : exit();
+             opcionValida = true;
                 break;     
              default:
-                 System.out.println("Por favos, ingrese una opcion valida.");
+                 
+                 System.out.println("Por favor, ingrese una opcion valida.");
          }
+         }while(!opcionValida);
          
-         play();
+        play();
      }
      
      public static void play(){
@@ -158,6 +169,7 @@ public class Interface {
             
             if(cord.getX()==-2&&cord.getY()==-2){
                 //TODO IMPLEMENTAR IR PARA ATRAS
+                
             }else{
                 printBoard(match.getBoard(), true, cord);
             }
