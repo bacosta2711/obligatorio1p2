@@ -186,8 +186,7 @@ public class Interface {
          
          if(match.getBoard().isResolved(match.getBoard().getMatElement())){
              System.out.printf("\n");
-             match.setMatchFinish();
-             System.out.println("Felicitaciones completaste el juego! en :" +match.getDuration());
+             System.out.println("Felicitaciones completaste el juego! en #INGRESAR TIEMPO#");
              System.out.println("");
              System.out.println("- Desea jugar con nosotros de nuevo? ingrese S si asi lo desea, de lo contrario ingrese N");
              System.out.println("");
@@ -199,9 +198,7 @@ public class Interface {
              }
 
              if(op.equalsIgnoreCase("S")){
-                 match.setMatchStart();
-                 playingMenu();
-                
+                playingMenu();
              }else{
                exit();
              }
@@ -450,14 +447,11 @@ public class Interface {
          
      }
      
-     public static void reset(){
-     }
+     public static void reset(){}
 
      public static void exit(){
          System.out.println("");
          System.out.println("Muchas gracias por todo! Hasta la proxima :)");
-         match.setMatchFinish();
-         System.out.println("El tiempo que duró su partida fue de : "+ match.getDuration());
          System.exit(0);
      }
      
