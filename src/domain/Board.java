@@ -321,8 +321,12 @@ public class Board {
         return result;
     }
     
-    public boolean isMovementvalid(Board b,Coordinate c){
+    public boolean isMovementValid(Coordinate c){
         //Dadas las coodeneadas que el usuario ingresa, nos indica si es un movimiento valido(tienen en cuenta el ir hacia atras y dimension del tablero)
-        return (c.getX()<=b.getCountRows()-1 && c.getY()<=b.getCountColums()-1) || (c.getX()==-2&&c.getY()==-2 || c.getX()==-2&&c.getY()>=0 );
+        
+        return (((c.getX()<=this.getCountRows()-1) && (c.getX()>=1)) 
+              && (c.getY()<=this.getCountColums()-1) && (c.getY() >=1))|| 
+               ((c.getX()==-2) && (c.getY()==-2))                       ||
+                ((c.getX()==-2) && (c.getY()==0));
     }
 }   
