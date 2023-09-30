@@ -84,7 +84,6 @@ public class Interface {
          
          Coordinate coords = new Coordinate(-1,0);
          printBoard(match.getBoard(), false, coords);
-         
          do{
          
             Coordinate cord = new Coordinate(0,0);
@@ -94,6 +93,7 @@ public class Interface {
                 System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
                 System.out.printf("\n");
                 String x = in.next();
+                System.out.println("");
                 if(x.equalsIgnoreCase("X")){
                     exit();
                 }else if(x.equalsIgnoreCase("H")){
@@ -108,8 +108,8 @@ public class Interface {
                }else{
                     try{
                         cord.setX(Integer.parseInt(x)-1);
-                        if (!match.getBoard().isMovementvalid(match.getBoard(), cord)) {
-                            System.out.println("La columna ingresada no es válida. Por favor, inténtelo de nuevo.");
+                        if (!match.getBoard().isMovementValid(cord)) {
+                            System.out.println("La fila ingresada no es válida. Por favor, inténtelo de nuevo.");
                             continue;
                         }
                     } catch (NumberFormatException e) {
@@ -124,6 +124,7 @@ public class Interface {
                 System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                 System.out.printf("\n");
                 String y = in.next();
+                System.out.println("");
                 if(y.equalsIgnoreCase("X")){
                     exit();
                 }else if(y.equalsIgnoreCase("H")){
@@ -138,8 +139,8 @@ public class Interface {
                }else{
                     try{
                         cord.setY(Integer.parseInt(y)-1);
-                        if (!match.getBoard().isMovementvalid(match.getBoard(), cord)) {
-                            System.out.println("La fila ingresada no es válida. Por favor, inténtelo de nuevo.");
+                        if (!match.getBoard().isMovementValid(cord)) {
+                            System.out.println("La columna ingresada no es válida. Por favor, inténtelo de nuevo.");
                             continue;
                         }
                     } catch (NumberFormatException e) {
@@ -256,6 +257,7 @@ public class Interface {
                 printDivisor(yBoard);
                 
             }
+            System.out.println("");
             match.setBoard(boardNew);
         }else{
             
