@@ -2,16 +2,17 @@
 
 package domain;
 
+import static interfaces.Interface.mainMenu;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
     private Board board;
-    private int matchStart;
-    private int matchFinish;
+    private long matchStart;
+    private long matchFinish;
     private List<Coordinate> movements;
 
-    public Match(Board board, int matchStart, int matchFinish) {
+    public Match(Board board, long matchStart, long matchFinish) {
         this.board = board;
         this.matchStart = matchStart;
         this.matchFinish = matchFinish;
@@ -32,19 +33,19 @@ public class Match {
         this.board = board;
     }
 
-    public int getMatchStart() {
+    public long getMatchStart() {
         return matchStart;
     }
 
-    public void setMatchStart(int matchStart) {
+    public void setMatchStart(long matchStart) {
         this.matchStart = matchStart;
     }
 
-    public int getMatchFinish() {
+    public long getMatchFinish() {
         return matchFinish;
     }
 
-    public void setMatchFinish(int matchFinish) {
+    public void setMatchFinish(long matchFinish) {
         this.matchFinish = matchFinish;
     }
 
@@ -56,11 +57,11 @@ public class Match {
         this.movements = movements;
     }
     public void resetMatch(){
-        
+        mainMenu();
     }
-    /*public int getDuration(){
-        
-    }*/
+    public long getDuration() {
+        return this.getMatchFinish() - this.getMatchStart();
+    }   
     public void addMovements (Coordinate newCoordinate){
         this.movements.add(newCoordinate);
     }
