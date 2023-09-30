@@ -321,12 +321,12 @@ public class Board {
         return result;
     }
     
-    public boolean isMovementValid(Coordinate c){
-        //Dadas las coodeneadas que el usuario ingresa, nos indica si es un movimiento valido(tienen en cuenta el ir hacia atras y dimension del tablero)
-        
-        return (((c.getX()<=this.getCountRows()-1) && (c.getX()>=1)) 
-              && (c.getY()<=this.getCountColums()-1) && (c.getY() >=1))|| 
-               ((c.getX()==-2) && (c.getY()==-2))                       ||
-                ((c.getX()==-2) && (c.getY()==0));
+    public boolean isMovementValid(Coordinate c) {
+        int x = c.getX();
+        int y = c.getY();
+        int rowCount = this.getCountRows();
+        int colCount = this.getCountColums();
+        return ((x > 0 && x < rowCount) && (y > 0 && y < colCount)) || (x == -2 && y == -2) || (x == -2 && y == 0);
     }
-}   
+
+    }      
