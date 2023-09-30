@@ -82,7 +82,7 @@ public class Match {
 
         String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
         return tiempo;
-    }  
+    }
     
     public void resetMatch(){ //ver
         this.matchStart = System.currentTimeMillis();
