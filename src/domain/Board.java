@@ -238,6 +238,7 @@ public class Board {
     //Implementacion del movimiento hacia atras    
         List<Coordinate> movementsAux = match.getMovements();
         int lastIndex = movementsAux.size() - 1;
+        //System.out.println("Last index: "+lastIndex);
         if (lastIndex >= 0) {
             Element element = getElementByCoord(match.getBoard(), movementsAux.get(lastIndex));
             doGeneric(element);

@@ -83,10 +83,9 @@ public class Interface {
      public static void play(){
          Scanner in = new Scanner(System.in);
          
-         Coordinate coords = new Coordinate(0,0);
+         Coordinate coords = new Coordinate(-1,0);
          printBoard(match.getBoard(), false, coords);
-         boolean validOptionY = false;
-         boolean validOptionX = false;
+         
          do{
          
             Coordinate cord = new Coordinate(0,0);
@@ -106,10 +105,7 @@ public class Interface {
                         System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                         System.out.println("");
                         y = in.next();
-                        validOptionY = true;
                         } while(y.equalsIgnoreCase("H"));
-
-
                     }else{
                         if(y.equalsIgnoreCase("S")){
                             do{
@@ -120,15 +116,17 @@ public class Interface {
                             System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
                             y = in.next();
                             System.out.println("");
-                            validOptionY = true;
                             } while(y.equalsIgnoreCase("S"));
                         }else{
-                            
+                            try{
                             cord.setY(Integer.parseInt(y)-1);
+                            }catch(NumberFormatException e){
+                                System.out.println("Por favor, ingrese una opcion/caracter valido");
+                            }
                         }
                     }
                 }
-            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord)) && !validOptionY);
+            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord)));
                 
             do {
                 System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
@@ -144,7 +142,6 @@ public class Interface {
                         System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
                         x = in.next();
                         System.out.println("");
-                        validOptionX = true;
                        }while(x.equalsIgnoreCase("H"));
 
                     }else{
@@ -156,17 +153,23 @@ public class Interface {
                             System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
                             x = in.next();
                             System.out.println("");
-                            validOptionX = true;
                             }while(x.equalsIgnoreCase("S"));
                         }else{
-                            cord.setX(Integer.parseInt(x)-1);
+                            try{
+                                cord.setX(Integer.parseInt(x)-1);
+                            }catch(NumberFormatException e){
+                                System.out.println("Por favor, ingrese una opcion/caracter valido");
+                            }
+                            
                         }
                     }
                 }
-            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord) && !validOptionX));
+            }while((!match.getBoard().isMovementvalid(match.getBoard(),cord)));
             
             if(cord.getX()==-2&&cord.getY()==-2){
                 //TODO IMPLEMENTAR IR PARA ATRAS
+                match.getBoard().stepBack(match);
+                printBoard(match.getBoard(), false, cord);
                 
             }else{
                 printBoard(match.getBoard(), true, cord);
@@ -188,6 +191,7 @@ public class Interface {
              }
 
              if(op.equalsIgnoreCase("S")){
+                match.setMatchStart();
                 playingMenu();
              }else{
                exit();
@@ -386,6 +390,9 @@ public class Interface {
      public static void exit(){
          System.out.println("");
          System.out.println("Muchas gracias por todo! Hasta la proxima :)");
+         match.setMatchFinish();
+         System.out.println("El tiempo que duró su partida fue de : "+ match.getDuration());
+         System.exit(0);
          System.exit(0);
      }
      

@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Match {
     private Board board;
-    private int matchStart;
-    private int matchFinish;
+    private long matchStart;
+    private long matchFinish;
     private List<Coordinate> movements;
 
-    public Match(Board board, int matchStart, int matchFinish) {
+    public Match(Board board, long matchStart, long matchFinish) {
         //constructo a partit de un tablero, y el resto de campos
         this.board = board;
         this.matchStart = matchStart;
@@ -37,24 +37,24 @@ public class Match {
         this.board = board;
     }
 
-    public int getMatchStart() {
+    public long getMatchStart() {
         //Obtener hora inicio
         return matchStart;
     }
 
-    public void setMatchStart(int matchStart) {
+    public void setMatchStart() {
         //Asignar hora inicio
-        this.matchStart = matchStart;
+        this.matchStart = System.currentTimeMillis();
     }
 
-    public int getMatchFinish() {
+    public long getMatchFinish() {
         //Obtener hora finalizado
         return matchFinish;
     }
 
-    public void setMatchFinish(int matchFinish) {
+    public void setMatchFinish() {
         //Set hora finalizado
-        this.matchFinish = matchFinish;
+        this.matchFinish = System.currentTimeMillis();
     }
 
     public List<Coordinate> getMovements() {
@@ -72,7 +72,20 @@ public class Match {
         this.movements.add(newCoordinate);
     }
     
-    public void resetMatch(){
-        //TODOD
+    public String getDuration() {
+        long aux = this.getMatchFinish() - this.getMatchStart();
+        long segundosTotales = aux / 1000;
+        long segundos = segundosTotales % 60;
+        long minutosTotales = segundosTotales / 60;
+        long minutos = minutosTotales % 60;
+        long horas = minutosTotales / 60;
+
+        String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
+        return tiempo;
+    }  
+    
+    public void resetMatch(){ //ver
+        this.matchStart = System.currentTimeMillis();
+        //mainMenu();
     }
 }
