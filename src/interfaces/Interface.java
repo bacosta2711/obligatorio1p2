@@ -56,28 +56,17 @@ public class Interface {
          
          
          String op= in.next();
+         op=op.toUpperCase();
          switch(op){
-             case "a": boardFormFile("./test/datos.txt");
-             validOption = true;
-                break;
              case "A" : boardFormFile("./test/datos.txt");
              validOption = true;
                  break;
-             case "b": boardFormFile("./test/default.txt");
-             validOption = true;
-                break;
              case "B" : boardFormFile("./test/default.txt");
-             validOption = true;
-                 break;
-             case "c": boardFormRandom();
              validOption = true;
                 break;
              case "C" : boardFormRandom();
              validOption = true;
                  break;
-             case "x": exit();
-             validOption = true;
-                break;
              case "X" : exit();
              validOption = true;
                 break;     
@@ -134,6 +123,7 @@ public class Interface {
                             validOptionY = true;
                             } while(y.equalsIgnoreCase("S"));
                         }else{
+                            
                             cord.setY(Integer.parseInt(y)-1);
                         }
                     }
@@ -182,9 +172,9 @@ public class Interface {
                 printBoard(match.getBoard(), true, cord);
             }
             
-         }while(!match.getBoard().isResolved(match.getBoard().getMatElement()));
+         }while(!match.getBoard().isResolved());
          
-         if(match.getBoard().isResolved(match.getBoard().getMatElement())){
+         if(match.getBoard().isResolved()){
              System.out.printf("\n");
              System.out.println("Felicitaciones completaste el juego! en #INGRESAR TIEMPO#");
              System.out.println("");
@@ -220,7 +210,9 @@ public class Interface {
             Board boardNew= new Board();
             boardNew.clone(board);
             
-            boardNew.doGeneric(match,boardNew.getElementByCoord(boardNew, cords));
+            boardNew.doGeneric(boardNew.getElementByCoord(boardNew, cords));
+            match.addMovements(cords);
+            
             boardNew.setBoardSolution(board.getBoardSolution());
             for (int p=0;p<2;p++){
                 System.out.print("    1");
@@ -324,72 +316,14 @@ public class Interface {
     public static void printStep(){
         System.out.print("    ===>    ");
     }
-     
-     
-     
-     
+         
      public static void boardFormFile(String file){
-        //String nombreArchivo = "./test/datos.txt";
-
-        try {
-            Scanner in = new Scanner(new File(file));
-            
-            String separator = " ";
-            
-            
-            // Leer y mostrar el contenido del archivo línea por línea
-            //while (in.hasNextLine()) {
-                String linea = in.nextLine();
-                String[] lcol = linea.split(separator);
-                
-                int cantRow =  Integer.parseInt(lcol[0]);
-                int cantCol =  Integer.parseInt(lcol[1]);
-                Element [] [] mat = new Element[cantRow] [cantCol];
-                for (int x = 0; x < cantRow; x++) {
-                    linea = in.nextLine();    
-                    lcol = linea.split(separator);
-                    
-                    
-                        for (int i=0;i<cantCol; i++) {
-                            Element e = new Element();
-                            e.setColor((lcol[i].charAt(1)=='A')? 'B' :'R');
-                            e.setSymbol(lcol[i].charAt(0));
-                            Coordinate c = new Coordinate(x,i);
-                            e.setCoordinate(c);
-                            e.toString();
-                            mat[x][i] = e;
-                        }
-                }
-                
-                List<Coordinate> solutionCoordinates = new ArrayList<>();
-                linea = in.nextLine();    
-                int cantSol = Integer.parseInt(linea);
-                
-                for (int i=0;i<cantSol; i++) {
-                    linea = in.nextLine(); 
-                    lcol = linea.split(separator);
-                    Coordinate c = new Coordinate(Integer.parseInt(lcol[0]),Integer.parseInt(lcol[1]));
-                    solutionCoordinates.add(c);
-                }
-                Board b = new Board(cantRow,cantCol,cantSol);
-                b.setCountColums(cantCol);
-                b.setCountRows(cantRow);
-                b.setBoardSolution(solutionCoordinates);
-                b.setMatElement(mat);
-                
-               
-                match.setBoard(b);
-                
-                
-                
-            in.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("Archivo no encontrado: " + e.getMessage());
-        }
-     
-     
+         //Este metodo recibe la ubicacion de un archivo y en base al mismo y el formato dado carga el tablero y sus soluciones
+         Board b = new Board();
+         b.newFileBoard(file);
+         match.setBoard(b);    
      }
-     public static void boardFormDefault(){}
+     
      public static void boardFormRandom(){
          Scanner in = new Scanner(System.in);
          
@@ -440,9 +374,9 @@ public class Interface {
          System.out.println("");
          
          Board b = new Board(rows,column,dificulty);
-         b =b.newRandomBoard(b);
-          b.createSolution(b);
-         b.executeSolution(b);
+         b.newRandomBoard();
+         b.createSolution();
+         b.executeSolution();
          match.setBoard(b);
          
      }
