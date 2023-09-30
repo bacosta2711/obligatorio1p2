@@ -20,7 +20,7 @@ public class Match {
     }
      public Match() {
         this.board = null;
-        this.matchStart = 0;
+        this.matchStart = System.currentTimeMillis();
         this.matchFinish = 0;
         this.movements = new ArrayList<>();
     }
@@ -37,16 +37,16 @@ public class Match {
         return matchStart;
     }
 
-    public void setMatchStart(long matchStart) {
-        this.matchStart = matchStart;
+    public void setMatchStart() {
+        this.matchStart = System.currentTimeMillis();
     }
 
     public long getMatchFinish() {
         return matchFinish;
     }
 
-    public void setMatchFinish(long matchFinish) {
-        this.matchFinish = matchFinish;
+    public void setMatchFinish() {
+        this.matchFinish = System.currentTimeMillis();;
     }
 
     public List<Coordinate> getMovements() {
@@ -57,11 +57,19 @@ public class Match {
         this.movements = movements;
     }
     public void resetMatch(){
+        this.matchStart = System.currentTimeMillis();
         mainMenu();
     }
-    public long getDuration() {
-        return this.getMatchFinish() - this.getMatchStart();
-    }   
+    public String getDuration() {
+    long aux = this.getMatchFinish() - this.getMatchStart();
+    long segundos = aux / 1000;
+    long minutos = segundos / 60;
+    long horas = minutos / 60;
+    minutos %= 60;
+    segundos %= 60;
+    String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
+    return tiempo;
+    }  
     public void addMovements (Coordinate newCoordinate){
         this.movements.add(newCoordinate);
     }
