@@ -84,41 +84,47 @@ public class Match {
         String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
         return tiempo;
     }
-    
-    public List<Coordinate> getMatchSolution(){
-      List<Coordinate> solutions = this.getBoard().getBoardSolution();
-      List<Coordinate> movements = this.getMovements();
-      
-      List<Coordinate> realSolution = new ArrayList<>();
-     
-         for (int i = solutions.size() - 1; i >= 0; i--) {
-              Coordinate c = solutions.get(i);
-              int qtty =0;
-              for (Coordinate movement : movements) {
-                 if(movement.equals(c)){
-                    qtty++;
-                 }
-              }
-              if(qtty%2!=0 && !realSolution.contains(c)){
-                realSolution.add(c);
-              }
-        }
-         
-        for (int i = movements.size() - 1; i >= 0; i--) {
-            Coordinate c = movements.get(i);
-            int qtty =0;
-                for (Coordinate movement : movements) {
-                    if(movement.equals(c)){
-                        qtty++;
-                    }
+   
+    public List<Coordinate> getMatchSolution() {
+        List<Coordinate> solutions = this.getBoard().getBoardSolution();
+        List<Coordinate> movements = this.getMovements();
+        List<Coordinate> realSolution = new ArrayList<>();
+        for (Coordinate coordinate : solutions) {
+            int count = 0;
+            for (Coordinate c : solutions) {
+                if (coordinate.equals(c)) {
+                    count++;
                 }
-            if(qtty%2!=0 && !realSolution.contains(c)){
-                realSolution.add(c);
+            }
+            for (Coordinate c : movements) {
+                if (coordinate.equals(c)) {
+                    count++;
+                }
+            }
+            if (count % 2 != 0 && !realSolution.contains(coordinate)) {
+                realSolution.add(coordinate);
             }
         }
-        
-      return realSolution;
+        for (Coordinate coordinate : movements) {
+            int count = 0;
+            for (Coordinate c : solutions) {
+                if (coordinate.equals(c)) {
+                    count++;
+                }
+            }
+            for (Coordinate c : movements) {
+                if (coordinate.equals(c)) {
+                    count++;
+                }
+            }
+
+            if (count % 2 != 0 && !realSolution.contains(coordinate)) {
+                realSolution.add(coordinate);
+            }
+        }
+        return realSolution;
     }
+
     
     public void resetMatch(){   
         this.matchStart = System.currentTimeMillis();
