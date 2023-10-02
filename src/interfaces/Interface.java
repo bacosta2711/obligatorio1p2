@@ -100,7 +100,6 @@ public class Interface {
                        play();
                    }else if(x.equalsIgnoreCase("S")){
                        System.out.println("Los movimientos que daran solucion al tablero son:");
-                       showHistory(match);
                        showSolution(match);
                        play();
                   }else{
@@ -125,7 +124,6 @@ public class Interface {
                        play();
                    }else if(y.equalsIgnoreCase("S")){
                        System.out.println("Los movimientos que daran solucion al tablero son:");
-                       showHistory(match);
                        showSolution(match);
                        play();
                   }else{
