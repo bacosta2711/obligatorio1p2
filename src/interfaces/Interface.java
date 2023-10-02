@@ -4,9 +4,6 @@ import java.util.Scanner;
 import domain.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 public class Interface {
      static Match match = new Match();
@@ -15,6 +12,7 @@ public class Interface {
      }
      
      public static void mainMenu(){
+         //metodo que se encarga de imprimir el menu de bienvenida
          Scanner in = new Scanner(System.in);
          
          System.out.println("           ----------------------   ");
@@ -41,8 +39,9 @@ public class Interface {
      
      
      public static void playingMenu(){
+         //metodo que se encarga de implementar la logica para levantar el tablero
          Scanner in = new Scanner(System.in);
-         
+          
          System.out.println("           ----------------------   ");
          System.out.println("                VAMOS A JUGAR!      ");
          System.out.println("           ----------------------   ");
@@ -80,81 +79,76 @@ public class Interface {
      }
      
      public static void play(){
+         //aqui se implementa toda la logica de jugar
          Scanner in = new Scanner(System.in);
          
-         Coordinate coords = new Coordinate(-1,0);
+         Coordinate coords = new Coordinate(0,0);
          printBoard(match.getBoard(), false, coords);
          do{
-         
-            Coordinate cord = new Coordinate(0,0);
-            
-                   
-            do {
-                System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
-                System.out.printf("\n");
-                String x = in.next();
-                System.out.println("");
-                if(x.equalsIgnoreCase("X")){
-                    exit();
-                }else if(x.equalsIgnoreCase("H")){
-                    System.out.println("Los movimientos que se han realizado son:");
-                    showHistory(match);
-                    play();
-                }else if(x.equalsIgnoreCase("S")){
-                    System.out.println("Los movimientos que daran solucion al tablero son:");
-                    showHistory(match);
-                    showSolution(match);
-                    play();
-               }else{
-                    try{
-                        cord.setX(Integer.parseInt(x)-1);
-                        if (!match.getBoard().isMovementValid(cord)) {
-                            System.out.println("La fila ingresada no es válida. Por favor, inténtelo de nuevo.");
-                            continue;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Por favor, ingrese una opción/caracter válido.");
-                        continue;
-                    }
-                    break;
-               }
-            }while(true);
-            
-             do {
-                System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
-                System.out.printf("\n");
-                String y = in.next();
-                System.out.println("");
-                if(y.equalsIgnoreCase("X")){
-                    exit();
-                }else if(y.equalsIgnoreCase("H")){
-                    System.out.println("Los movimientos que se han realizado son:");
-                    showHistory(match);
-                    play();
-                }else if(y.equalsIgnoreCase("S")){
-                    System.out.println("Los movimientos que daran solucion al tablero son:");
-                    showHistory(match);
-                    showSolution(match);
-                    play();
-               }else{
-                    try{
-                        cord.setY(Integer.parseInt(y)-1);
-                        if (!match.getBoard().isMovementValid(cord)) {
-                            System.out.println("La columna ingresada no es válida. Por favor, inténtelo de nuevo.");
-                            continue;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Por favor, ingrese una opción/caracter válido.");
-                        continue;
-                    }
-                    break;
-               }
-            }while(true);
-            
-            if(cord.getX()==-2&&cord.getY()==-2){
-                match.getBoard().stepBack(match);
-                printBoard(match.getBoard(), false, cord);
+            Coordinate cord = new Coordinate(-3,-3);//Se crea una no valida de entrada
+            do{
+               do {
+                   System.out.printf("- Ingrese la fila(entre 1 y %d) de la posicion que desea",match.getBoard().getCountRows());
+                   System.out.printf("\n");
+                   String x = in.next();
+                   System.out.println("");
+                   if(x.equalsIgnoreCase("X")){
+                       exit();
+                   }else if(x.equalsIgnoreCase("H")){
+                       System.out.println("Los movimientos que se han realizado son:");
+                       showHistory(match);
+                       play();
+                   }else if(x.equalsIgnoreCase("S")){
+                       System.out.println("Los movimientos que daran solucion al tablero son:");
+                       showHistory(match);
+                       showSolution(match);
+                       play();
+                  }else{
+                       try{
+                           cord.setX(Integer.parseInt(x)-1);
+                       } catch (NumberFormatException e) {
+                           System.out.println("Por favor, ingrese una opción/caracter válido.");
+                       }
+                  }
+               }while(!match.getBoard().isXValid(cord.getX()));
+
+                do {
+                   System.out.printf("- Ingrese la columna(entre 1 y %d) de la posicion que desea",match.getBoard().getCountColums());
+                   System.out.printf("\n");
+                   String y = in.next();
+                   System.out.println("");
+                   if(y.equalsIgnoreCase("X")){
+                       exit();
+                   }else if(y.equalsIgnoreCase("H")){
+                       System.out.println("Los movimientos que se han realizado son:");
+                       showHistory(match);
+                       play();
+                   }else if(y.equalsIgnoreCase("S")){
+                       System.out.println("Los movimientos que daran solucion al tablero son:");
+                       showHistory(match);
+                       showSolution(match);
+                       play();
+                  }else{
+                       try{
+                           cord.setY(Integer.parseInt(y)-1);
+                       } catch (NumberFormatException e) {
+                           System.out.println("Por favor, ingrese una opción/caracter válido.");
+                       }
+                  }
+               }while(!match.getBoard().isYValid(cord.getY()));
                 
+                if(!match.getBoard().isMovementValid(cord)){
+                    System.out.println("Par de cordenadas no valido!");
+                }
+            }while(!match.getBoard().isMovementValid(cord));
+            
+             
+            if(cord.getX()==-2&&cord.getY()==-2){
+                boolean result = match.getBoard().stepBack(match);
+                if (!result){
+                    System.out.println("No hay movimientos para desahacer.");
+                }
+                printBoard(match.getBoard(), false, cord);
             }else{
                 printBoard(match.getBoard(), true, cord);
             }
@@ -164,7 +158,7 @@ public class Interface {
          if(match.getBoard().isResolved()){
              System.out.printf("\n");
              match.setMatchFinish();
-             System.out.println("Felicitaciones! completaste el juego en: "+ match.getDuration());
+             System.out.println("- El tiempo que duró su partida fue de : "+ match.getDuration()+" (HH:MM:SS)");
              System.out.println("");
              System.out.println("- Desea jugar con nosotros de nuevo? ingrese S si asi lo desea, de lo contrario ingrese N");
              System.out.println("");
@@ -188,6 +182,8 @@ public class Interface {
      
             
       public static void printBoard(Board board,boolean reqMovements, Coordinate cords){  
+        //dado un tablero debemos indicar si vamos a realziar un movimiento,en caso de realizarlo indicar las coords
+        //Esto se debe a que varia si se imprime un tablero o dos
         String blue = "\u001B[34m";
         String red = "\u001B[31m";
         String black = "\u001B[0m";
@@ -195,7 +191,7 @@ public class Interface {
         int xBoard = board.getCountRows();
         int yBoard =board.getCountColums();
         
-        if (reqMovements){
+        if (reqMovements){ 
             Board boardNew= new Board();
             boardNew.clone(board);
             
@@ -295,6 +291,7 @@ public class Interface {
     
     
      public static void printDivisor(int length){
+         //Se encarga de hacer las divisiones en el tablero basado en el largo del mismo
          System.out.printf("  +---");
          for (int y=1;y<length-1; y++) {
              System.out.printf("+---",y+1);
@@ -304,6 +301,7 @@ public class Interface {
     
     
     public static void printStep(){
+        //imprime las flechas de la transaccion del tbleo
         System.out.print("    ===>    ");
     }
          
@@ -315,6 +313,7 @@ public class Interface {
      }
      
      public static void boardFormRandom(){
+         //Este metodo se encarga de solicitar la informacion necesaria para crear un tablero aleatorio
          Scanner in = new Scanner(System.in);
          
          int dificulty=0;
@@ -379,9 +378,12 @@ public class Interface {
         
 
          System.out.println("");
-         
+         boolean isReallyValid = false;
          Board b = new Board(rows,column,dificulty);
-         b.newRandomBoard();
+         while(!isReallyValid){ 
+            b.newRandomBoard();
+            isReallyValid = b.isResolved();
+         }   
          b.createSolution();
          b.executeSolution();
          match.setBoard(b);
@@ -389,29 +391,32 @@ public class Interface {
      }
      
      public static void reset(){
-     
+        List<Coordinate> list = new ArrayList<>(); 
+        match.setMovements(list);
+        playingMenu();
      }
 
      public static void exit(){
+         //Imprime la informacion necesaria para salir del juego
          System.out.println("");
          System.out.println("Muchas gracias por todo! Hasta la proxima :)");
-         match.setMatchFinish();
-         System.out.println("El tiempo que duró su partida fue de : "+ match.getDuration());
          System.exit(0);
-         System.exit(0);
+         
      }
      
      public static void showSolution(Match match){
-        List<Coordinate> solutions = match.getBoard().getBoardSolution();
-        
+         //Se encarga de mostrar la solucion del tablero
+        List<Coordinate> solutions = match.getMatchSolution();
        
          for (int i = solutions.size() - 1; i >= 0; i--) {
               Coordinate c = solutions.get(i);
               System.out.println(c.toString());
+              
         }
      }
      
      public static void showHistory(Match match){
+         //Se encarga de mostrar el historial de movimientos
         List<Coordinate> movements = match.getMovements();
         
         for (int i = movements.size() - 1; i >= 0; i--) {

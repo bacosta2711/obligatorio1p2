@@ -1,4 +1,5 @@
 //Mateo Seijo 309095
+//Bruno Acosta 313080
 
 package domain;
 
@@ -84,8 +85,42 @@ public class Match {
         return tiempo;
     }
     
-    public void resetMatch(){ //ver
+    public List<Coordinate> getMatchSolution(){
+      List<Coordinate> solutions = this.getBoard().getBoardSolution();
+      List<Coordinate> movements = this.getMovements();
+      
+      List<Coordinate> realSolution = new ArrayList<>();
+     
+         for (int i = solutions.size() - 1; i >= 0; i--) {
+              Coordinate c = solutions.get(i);
+              int qtty =0;
+              for (Coordinate movement : movements) {
+                 if(movement.equals(c)){
+                    qtty++;
+                 }
+              }
+              if(qtty%2!=0 && !realSolution.contains(c)){
+                realSolution.add(c);
+              }
+        }
+         
+        for (int i = movements.size() - 1; i >= 0; i--) {
+            Coordinate c = movements.get(i);
+            int qtty =0;
+                for (Coordinate movement : movements) {
+                    if(movement.equals(c)){
+                        qtty++;
+                    }
+                }
+            if(qtty%2!=0 && !realSolution.contains(c)){
+                realSolution.add(c);
+            }
+        }
+        
+      return realSolution;
+    }
+    
+    public void resetMatch(){   
         this.matchStart = System.currentTimeMillis();
-        //mainMenu();
     }
 }

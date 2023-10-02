@@ -1,4 +1,5 @@
 //Mateo Seijo 309095
+//Bruno Acosta 313080
 package domain;
 
 import java.io.File;
@@ -234,19 +235,21 @@ public class Board {
         }
     }
     
-    public void stepBack(Match match) {
+    public boolean stepBack(Match match) {
     //Implementacion del movimiento hacia atras    
+        boolean done =true;
+        
         List<Coordinate> movementsAux = match.getMovements();
         int lastIndex = movementsAux.size() - 1;
-        //System.out.println("Last index: "+lastIndex);
         if (lastIndex >= 0) {
             Element element = getElementByCoord(match.getBoard(), movementsAux.get(lastIndex));
             doGeneric(element);
             movementsAux.remove(lastIndex);
             match.setMovements(movementsAux);
         } else {
-            System.out.println("No hay movimientos para deshacer.");
+            done = false;
         }
+        return done;
     }
     
     public void createSolution() {
@@ -302,7 +305,7 @@ public class Board {
         for (int i = 0; i< aux.size(); i++){
             Coordinate coordinate = aux.get(i);
             Element auxElement = getElementByCoord(this,coordinate);
-            System.out.println("La solucion es: "+(auxElement.getCoordinate().getX()+1)+"(F)"+(auxElement.getCoordinate().getY()+1)+"(C)");
+            //System.out.println("La solucion es: "+(auxElement.getCoordinate().getX()+1)+"(F)"+(auxElement.getCoordinate().getY()+1)+"(C)");
             doGeneric(auxElement);
         }  
     }
@@ -324,9 +327,16 @@ public class Board {
     public boolean isMovementValid(Coordinate c) {
         int x = c.getX();
         int y = c.getY();
-        int rowCount = this.getCountRows();
-        int colCount = this.getCountColums();
-        return ((x > 0 && x < rowCount) && (y > 0 && y < colCount)) || (x == -2 && y == -2) || (x == -2 && y == 0);
+        return (x<this.getCountRows() && x>=0 && y<this.getCountColums() && y>=0) ||   (x == -2 && y == -2);
     }
+    
+    public boolean isXValid(Integer i){
+        return i==-2 || i<this.getCountRows() && i>=0;
+    }
+    
+    public boolean isYValid(Integer i){
+          return i==-2 || i<this.getCountColums() && i>=0;
+    }
+
 
     }      
