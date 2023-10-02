@@ -1,6 +1,7 @@
 //Mateo Seijo 309095 - 309095
+//Bruno Acosta  - 313080
 package domain;
-//Bruno Acosta 313080
+
 public class Coordinate {
     private int x;
     private int y;
