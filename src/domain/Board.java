@@ -75,9 +75,6 @@ public class Board {
 
     public void setBoardSolution(List<Coordinate> boardSolution) {
         //Set de Solucion del tamblero
-        for (Coordinate coordinate : boardSolution) {
-            System.out.println(coordinate.toString());
-        }
         this.boardSolution = boardSolution;
     }
 

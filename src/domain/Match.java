@@ -85,46 +85,6 @@ public class Match {
         return tiempo;
     }
 
-    public List<Coordinate> getMatchSolution() {
-        List<Coordinate> solutions = this.getBoard().getBoardSolution();
-        List<Coordinate> movements = this.getMovements();
-        List<Coordinate> realSolution = new ArrayList<>();
-        for (Coordinate coordinate : solutions) {
-            int count = 0;
-            for (Coordinate c : solutions) {
-                if (coordinate.equals(c)) {
-                    count++;
-                }
-            }
-            for (Coordinate c : movements) {
-                if (coordinate.equals(c)) {
-                    count++;
-                }
-            }
-            if (count % 2 != 0 && !realSolution.contains(coordinate)) {
-                realSolution.add(coordinate);
-            }
-        }
-        for (Coordinate coordinate : movements) {
-            int count = 0;
-            for (Coordinate c : solutions) {
-                if (coordinate.equals(c)) {
-                    count++;
-                }
-            }
-            for (Coordinate c : movements) {
-                if (coordinate.equals(c)) {
-                    count++;
-                }
-            }
-
-            if (count % 2 != 0 && !realSolution.contains(coordinate)) {
-                realSolution.add(coordinate);
-            }
-        }
-        return realSolution;
-    }
-
     public void resetMatch() {
         this.matchStart = System.currentTimeMillis();
     }

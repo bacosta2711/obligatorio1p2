@@ -79,6 +79,8 @@ public class Interface {
                     System.out.println(" ");
             }
         } while (!validOption);
+        Coordinate coords = new Coordinate(0, 0);
+        printBoard(match.getBoard(), false, coords);
 
         play();
     }
@@ -86,9 +88,8 @@ public class Interface {
     public static void play() {
         //aqui se implementa toda la logica de jugar
         Scanner in = new Scanner(System.in);
-
         Coordinate coords = new Coordinate(0, 0);
-        printBoard(match.getBoard(), false, coords);
+
         do {
             Coordinate cord = new Coordinate(-3, -3);//Se crea una no valida de entrada
             do {
@@ -100,7 +101,12 @@ public class Interface {
                     if (x.equalsIgnoreCase("X")) {
                         exit();
                     } else if (x.equalsIgnoreCase("H")) {
-                        System.out.println("Los movimientos que se han realizado son:");
+                        if (!match.getMovements().isEmpty()) {
+                            System.out.println("Los movimientos que se han realizado son:");
+                        } else {
+                            System.out.println("Aun no hay movimientos realizados");
+                            System.out.println("");
+                        }
                         showHistory(match);
                         play();
                     } else if (x.equalsIgnoreCase("S")) {
@@ -124,7 +130,12 @@ public class Interface {
                     if (y.equalsIgnoreCase("X")) {
                         exit();
                     } else if (y.equalsIgnoreCase("H")) {
-                        System.out.println("Los movimientos que se han realizado son:");
+                        if (!match.getMovements().isEmpty()) {
+                            System.out.println("Los movimientos que se han realizado son:");
+                        } else {
+                            System.out.println("Aun no hay movimientos realizados");
+                            System.out.println("");
+                        }
                         showHistory(match);
                         play();
                     } else if (y.equalsIgnoreCase("S")) {
@@ -143,6 +154,7 @@ public class Interface {
                 if (!match.getBoard().isMovementValid(cord)) {
                     System.out.println("Par de cordenadas no valido!");
                 }
+
             } while (!match.getBoard().isMovementValid(cord));
 
             if (cord.getX() == -2 && cord.getY() == -2) {
@@ -179,6 +191,7 @@ public class Interface {
                 exit();
             }
         }
+        printBoard(match.getBoard(), false, coords);
 
     }
 
@@ -400,7 +413,12 @@ public class Interface {
 
     public static void showSolution(Match match) {
         //Se encarga de mostrar la solucion del tablero
-        List<Coordinate> solutions = match.getMatchSolution();
+        List<Coordinate> movements = match.getMovements();
+        for (int i = movements.size() - 1; i >= 0; i--) {
+            Coordinate c = movements.get(i);
+            System.out.println(c.toString());
+        }
+        List<Coordinate> solutions = match.getBoard().getBoardSolution();
 
         for (int i = solutions.size() - 1; i >= 0; i--) {
             Coordinate c = solutions.get(i);
