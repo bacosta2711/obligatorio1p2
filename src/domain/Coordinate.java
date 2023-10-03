@@ -3,15 +3,16 @@
 package domain;
 
 public class Coordinate {
+
     private int x;
     private int y;
-    
-    public Coordinate(int x, int y){
+
+    public Coordinate(int x, int y) {
         //Constructor de Coodinate
         this.x = x;
         this.y = y;
     }
-    
+
     public int getX() {
         //Get de x
         return x;
@@ -31,24 +32,26 @@ public class Coordinate {
         //Set de Y
         this.y = y;
     }
-    
+
     @Override
     public String toString() {
         //Se sobre escribe para imprimir de manera correca X e Y como par ordenado
-        return "(" + (this.getX()+1) + ","+(this.getY()+1) +")";
+        return "(" + (this.getX() + 1) + "," + (this.getY() + 1) + ")";
     }
-    
+
     @Override
     public boolean equals(Object o) {
         //Se utiliza para coparar si dos coordenadas son iguales
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Coordinate coordinate = (Coordinate) o;
 
         return this.getX() == coordinate.getX() && this.getY() == coordinate.getY();
     }
-    
-    
- 
+
 }

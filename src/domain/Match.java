@@ -1,12 +1,12 @@
 //Mateo Seijo 309095
 //Bruno Acosta 313080
-
 package domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
+
     private Board board;
     private long matchStart;
     private long matchFinish;
@@ -19,18 +19,18 @@ public class Match {
         this.matchFinish = matchFinish;
         this.movements = new ArrayList<>();
     }
-    
+
     public Match() {
-         //Constructor nulo de match
+        //Constructor nulo de match
         this.board = null;
         this.matchStart = 0;
         this.matchFinish = 0;
         this.movements = new ArrayList<>();
     }
-    
+
     public Board getBoard() {
         //Get el tablero
-        return board;   
+        return board;
     }
 
     public void setBoard(Board board) {
@@ -67,12 +67,12 @@ public class Match {
         //Asignar lista de movimientos ejecutados
         this.movements = movements;
     }
-    
-    public void addMovements (Coordinate newCoordinate){
+
+    public void addMovements(Coordinate newCoordinate) {
         //Agregar movimiento(cordenada) a lista de los mismos
         this.movements.add(newCoordinate);
     }
-    
+
     public String getDuration() {
         long aux = this.getMatchFinish() - this.getMatchStart();
         long segundosTotales = aux / 1000;
@@ -84,7 +84,7 @@ public class Match {
         String tiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
         return tiempo;
     }
-   
+
     public List<Coordinate> getMatchSolution() {
         List<Coordinate> solutions = this.getBoard().getBoardSolution();
         List<Coordinate> movements = this.getMovements();
@@ -125,8 +125,7 @@ public class Match {
         return realSolution;
     }
 
-    
-    public void resetMatch(){   
+    public void resetMatch() {
         this.matchStart = System.currentTimeMillis();
     }
 }
