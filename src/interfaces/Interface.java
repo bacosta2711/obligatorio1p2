@@ -169,7 +169,8 @@ public class Interface {
 
              if(op.equalsIgnoreCase("S")){
                 match.setMatchStart();
-                playingMenu();
+                
+                reset();
              }else{
                exit();
              }
