@@ -2,13 +2,12 @@
 //Bruno Acosta 313080
 package domain;
 
-
 public class Element {
+
     private char color;
     private char symbol;
     private Coordinate coordinate;
 
-    
     public Coordinate getCoordinate() {
         //Get de coordenada
         return coordinate;
@@ -18,7 +17,7 @@ public class Element {
         //Set de coordenada
         this.coordinate = coordinate;
     }
-    
+
     public char getColor() {
         //Get del color
         return color;
@@ -38,14 +37,14 @@ public class Element {
         //Set del simbolo
         this.symbol = symbol;
     }
-    
-    public void changeColor(){
+
+    public void changeColor() {
         //Cambia el color al elemento
-        if(this.getColor() == 'B'){
+        if (this.getColor() == 'B') {
             this.setColor('R');
-        }else{
+        } else {
             this.setColor('B');
         }
     }
-    
+
 }
