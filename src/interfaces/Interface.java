@@ -170,26 +170,7 @@ public class Interface {
         } while (!match.getBoard().isResolved());
 
         if (match.getBoard().isResolved()) {
-            System.out.printf("\n");
-            match.setMatchFinish();
-            System.out.println("- El tiempo que duró su partida fue de : " + match.getDuration() + " (HH:MM:SS)");
-            System.out.println("");
-            System.out.println("- Desea jugar con nosotros de nuevo? ingrese S si asi lo desea, de lo contrario ingrese N");
-            System.out.println("");
-
-            String op = in.next();
-            while (!(op.equalsIgnoreCase("S") || op.equalsIgnoreCase("N"))) {
-                System.out.println("Opcion no valida, si desea volver a jugar ingrese S si asi lo desea, de lo contrario ingrese N");
-                op = in.next();
-            }
-
-            if (op.equalsIgnoreCase("S")) {
-                match.setMatchStart();
-
-                reset();
-            } else {
-                exit();
-            }
+            exit();
         }
         printBoard(match.getBoard(), false, coords);
 
@@ -405,20 +386,35 @@ public class Interface {
 
     public static void exit() {
         //Imprime la informacion necesaria para salir del juego
-        System.out.println("");
-        System.out.println("Muchas gracias por todo! Hasta la proxima :)");
-        System.exit(0);
+         Scanner in = new Scanner(System.in);
+        
+        System.out.printf("\n");
+            match.setMatchFinish();
+            System.out.println("- El tiempo que duro su partida fue de : " + match.getDuration() + " (HH:MM:SS)");
+            System.out.println("");
+            System.out.println("- Desea jugar con nosotros de nuevo? ingrese S si asi lo desea, de lo contrario ingrese N");
+            System.out.println("");
 
+            String op = in.next();
+            while (!(op.equalsIgnoreCase("S") || op.equalsIgnoreCase("N"))) {
+                System.out.println("Opcion no valida, si desea volver a jugar ingrese S si asi lo desea, de lo contrario ingrese N");
+                op = in.next();
+            }
+
+            if (op.equalsIgnoreCase("S")) {
+                match.setMatchStart();
+
+                reset();
+            } else {
+                System.out.println("");
+                System.out.println("Muchas gracias por todo! Hasta la proxima :)");
+                System.exit(0);
+            }
     }
 
-    public static void showSolution(Match match) {
+  public static void showSolution(Match match) {
         //Se encarga de mostrar la solucion del tablero
-        List<Coordinate> movements = match.getMovements();
-        for (int i = movements.size() - 1; i >= 0; i--) {
-            Coordinate c = movements.get(i);
-            System.out.println(c.toString());
-        }
-        List<Coordinate> solutions = match.getBoard().getBoardSolution();
+        List<Coordinate> solutions = match.getMatchSolution();
 
         for (int i = solutions.size() - 1; i >= 0; i--) {
             Coordinate c = solutions.get(i);
@@ -426,6 +422,7 @@ public class Interface {
 
         }
     }
+    
 
     public static void showHistory(Match match) {
         //Se encarga de mostrar el historial de movimientos
