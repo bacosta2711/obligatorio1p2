@@ -117,7 +117,7 @@ public class Interface {
                         try {
                             cord.setX(Integer.parseInt(x) - 1);
                         } catch (NumberFormatException e) {
-                            System.out.println("Por favor, ingrese una opción/caracter válido.");
+                            System.out.println("Por favor, ingrese una opcion/caracter válido.");
                         }
                     }
                 } while (!match.getBoard().isXValid(cord.getX()));
@@ -146,7 +146,7 @@ public class Interface {
                         try {
                             cord.setY(Integer.parseInt(y) - 1);
                         } catch (NumberFormatException e) {
-                            System.out.println("Por favor, ingrese una opción/caracter válido.");
+                            System.out.println("Por favor, ingrese una opcion/caracter válido.");
                         }
                     }
                 } while (!match.getBoard().isYValid(cord.getY()));
@@ -352,7 +352,7 @@ public class Interface {
 
         do {
             try {
-                System.out.println("- Ingrese la dificulatd que desea (entre 1 y 8)");
+                System.out.println("- Ingrese la dificultad que desea (entre 1 y 8)");
                 letterAux = in.next();
                 if (letterAux.equalsIgnoreCase("X")) {
                     exit();
